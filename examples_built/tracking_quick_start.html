@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dipy &mdash; dipy 0.10.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/dipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="dipy 0.10.1 documentation" href="../index.html" />
+  <meta name="keywords" content="dipy, dMRI, DTI, DSI, diffusion MRI, Tensor,
+  neuroimaging, python, neuroscience, Eleftherios, Garyfallidis, tractography,
+  streamlines, fiber tracking">
+
+  </head>
+  <body role="document">
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+ <a href="../index.html">
+  <img src="../_static/dipy-banner.png" alt="dipy logo"  border="0" />
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+  <li><a href="../index.html">Home</a> |&nbsp;</li>
+  <li><a href="../stateoftheart.html">Overview</a> |&nbsp;</li>
+  <li><a href="../examples_index.html">Gallery</a> |&nbsp;</li>
+  <li><a href="../installation.html">Download</a> |&nbsp;</li>
+  <li><a href="../subscribe.html">Subscribe</a> |&nbsp;</li>
+  <li><a href="../developers.html">Developers</a> |&nbsp;</li>
+  <li><a href="../cite.html">Cite</a> &nbsp;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+<h4> Site Navigation </h4>
+  <ul>
+    <li><a href="../documentation.html">Documentation</a></li>
+    <li><a href="../devel/index.html">Development</a></li>
+  </ul>
+
+<h4> NIPY Community </h4>
+  <ul class="simple">
+    <li><a class="reference external"
+	href="http://nipy.org/">Community Home</a></li>
+    <li><a class="reference external"
+	href="http://nipy.org/software/projects/">NIPY Projects</a></li>
+    <li><a class="reference external"
+	href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing List</a></li>
+    <li><a class="reference external"
+	href="http://nipy.org/software/license/index.html">License</a></li>
+  </ul>
+
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples_built/tracking_quick_start.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+
+<div id="searchbox-ml" style="display: none">
+  <h3>Search mailing list archive</h3>
+  <script type="text/javascript">
+    function mlsearch(curobj)
+    {
+    curobj.q.value="site:mail.python.org/pipermail/neuroimaging/ "+curobj.userquery.value
+    }
+  </script>
+  <form action="http://www.google.com/search" method="get" onSubmit="mlsearch(this)">
+    <input name="userquery" size="13" type="text" /> <input type="submit" value="Go" />
+    <input name="q" type="hidden" />
+  </form>
+</div>
+
+<div id="searchbox-site" style="display: none">
+  <h3>Search this site</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="13" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox-ml').show(0);</script>
+<script type="text/javascript">$('#searchbox-site').show(0);</script>
+
+
+<script>
+     ((window.gitter = {}).chat = {}).options = {
+       room: 'nipy/dipy'
+     };
+</script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tracking-quick-start">
+<span id="example-tracking-quick-start"></span><h1>Tracking Quick Start<a class="headerlink" href="#tracking-quick-start" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how to perform fiber tracking using Dipy.</p>
+<p>We will use Constrained Spherical Deconvolution (CSD) <a class="reference internal" href="#tournier07" id="id1">[Tournier07]</a> for local
+reconstructions and then generate deterministic streamlines using the fiber
+directions (peaks) from CSD and fractional anisotropic (FA) as a
+stopping criterion.</p>
+<p>Let&#8217;s load the necessary modules.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">dipy.reconst.dti</span> <span class="kn">import</span> <span class="n">TensorModel</span><span class="p">,</span> <span class="n">fractional_anisotropy</span>
+<span class="kn">from</span> <span class="nn">dipy.reconst.csdeconv</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ConstrainedSphericalDeconvModel</span><span class="p">,</span>
+                                   <span class="n">auto_response</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">dipy.direction</span> <span class="kn">import</span> <span class="n">peaks_from_model</span>
+<span class="kn">from</span> <span class="nn">dipy.tracking.eudx</span> <span class="kn">import</span> <span class="n">EuDX</span>
+<span class="kn">from</span> <span class="nn">dipy.data</span> <span class="kn">import</span> <span class="n">fetch_stanford_hardi</span><span class="p">,</span> <span class="n">read_stanford_hardi</span><span class="p">,</span> <span class="n">get_sphere</span>
+<span class="kn">from</span> <span class="nn">dipy.segment.mask</span> <span class="kn">import</span> <span class="n">median_otsu</span>
+<span class="kn">from</span> <span class="nn">dipy.viz</span> <span class="kn">import</span> <span class="n">fvtk</span>
+<span class="kn">from</span> <span class="nn">dipy.viz.colormap</span> <span class="kn">import</span> <span class="n">line_colors</span>
+</pre></div>
+</div>
+<p>Load one of the available datasets with 150 gradients on the sphere and 10 b0s</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fetch_stanford_hardi</span><span class="p">()</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">gtab</span> <span class="o">=</span> <span class="n">read_stanford_hardi</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create a brain mask. This dataset is a bit difficult to segment with the
+default <code class="docutils literal"><span class="pre">median_otsu</span></code> parameters (see <a class="reference internal" href="brain_extraction_dwi.html#example-brain-extraction-dwi"><span>Brain segmentation with median_otsu</span></a>)
+therefore we use here a bit more advanced options.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">maskdata</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">median_otsu</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>
+                             <span class="n">vol_idx</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">dilate</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For the constrained spherical deconvolution we need to estimate the response
+function (see <a class="reference internal" href="reconst_csd.html#example-reconst-csd"><span>Reconstruction with Constrained Spherical Deconvolution</span></a>) and create a model.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">response</span><span class="p">,</span> <span class="n">ratio</span> <span class="o">=</span> <span class="n">auto_response</span><span class="p">(</span><span class="n">gtab</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">roi_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fa_thr</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">csd_model</span> <span class="o">=</span> <span class="n">ConstrainedSphericalDeconvModel</span><span class="p">(</span><span class="n">gtab</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next, we use <code class="docutils literal"><span class="pre">peaks_from_model</span></code> to fit the data and calculated the fiber
+directions in all voxels.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sphere</span> <span class="o">=</span> <span class="n">get_sphere</span><span class="p">(</span><span class="s">&#39;symmetric724&#39;</span><span class="p">)</span>
+
+<span class="n">csd_peaks</span> <span class="o">=</span> <span class="n">peaks_from_model</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">csd_model</span><span class="p">,</span>
+                             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                             <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">,</span>
+                             <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
+                             <span class="n">relative_peak_threshold</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span>
+                             <span class="n">min_separation_angle</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                             <span class="n">parallel</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For the tracking part, we will use the fiber directions from the <code class="docutils literal"><span class="pre">csd_model</span></code>
+but stop tracking in areas where fractional anisotropy (FA) is low (&lt; 0.1).
+To derive the FA, used here as a stopping criterion, we would need to fit a
+tensor model first. Here, we fit the Tensor using weighted least squares (WLS).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tensor_model</span> <span class="o">=</span> <span class="n">TensorModel</span><span class="p">(</span><span class="n">gtab</span><span class="p">,</span> <span class="n">fit_method</span><span class="o">=</span><span class="s">&#39;WLS&#39;</span><span class="p">)</span>
+<span class="n">tensor_fit</span> <span class="o">=</span> <span class="n">tensor_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+<span class="n">FA</span> <span class="o">=</span> <span class="n">fractional_anisotropy</span><span class="p">(</span><span class="n">tensor_fit</span><span class="o">.</span><span class="n">evals</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In order for the stopping values to be used with our tracking algorithm we need
+to have the same dimensions as the <code class="docutils literal"><span class="pre">csd_peaks.peak_values</span></code>. For this reason,
+we can assign the same FA value to every peak direction in the same voxel in
+the following way.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stopping_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">csd_peaks</span><span class="o">.</span><span class="n">peak_values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">stopping_values</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">FA</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For quality assurance we can also visualize a slice from the direction field
+which we will use as the basis to perform the tracking.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ren</span> <span class="o">=</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">ren</span><span class="p">()</span>
+
+<span class="n">slice_no</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="n">fvtk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">peaks</span><span class="p">(</span><span class="n">csd_peaks</span><span class="o">.</span><span class="n">peak_dirs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_no</span><span class="p">:</span><span class="n">slice_no</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                         <span class="n">stopping_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_no</span><span class="p">:</span><span class="n">slice_no</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;Saving illustration as csd_direction_field.png&#39;</span><span class="p">)</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">out_path</span><span class="o">=</span><span class="s">&#39;csd_direction_field.png&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">900</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id4">
+<img alt="../_images/csd_direction_field.png" src="../_images/csd_direction_field.png" />
+<p class="caption"><span class="caption-text"><strong>Direction Field (peaks)</strong></span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">EuDX</span></code> <a class="reference internal" href="../reference/dipy.segment.html#id19" id="id2">[Garyfallidis12]</a> is a fast algorithm that we use here to generate
+streamlines. If the parameter <code class="docutils literal"><span class="pre">seeds</span></code> is a positive integer it will generate
+that number of randomly placed seeds everywhere in the volume. Alternatively,
+you can specify the exact seed points using an array (N, 3) where N is the
+number of seed points. For simplicity, here we will use the first option
+(random seeds). <code class="docutils literal"><span class="pre">a_low</span></code> is the threshold of the fist parameter
+(<code class="docutils literal"><span class="pre">stopping_values</span></code>) which means that there will that tracking will stop in
+regions with FA &lt; 0.1.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">streamline_generator</span> <span class="o">=</span> <span class="n">EuDX</span><span class="p">(</span><span class="n">stopping_values</span><span class="p">,</span>
+                            <span class="n">csd_peaks</span><span class="o">.</span><span class="n">peak_indices</span><span class="p">,</span>
+                            <span class="n">seeds</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">,</span>
+                            <span class="n">odf_vertices</span><span class="o">=</span><span class="n">sphere</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span>
+                            <span class="n">a_low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">streamlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">streamline</span> <span class="k">for</span> <span class="n">streamline</span> <span class="ow">in</span> <span class="n">streamline_generator</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We can visualize the streamlines using <code class="docutils literal"><span class="pre">fvtk.line</span></code> or <code class="docutils literal"><span class="pre">fvtk.streamtube</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fvtk</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">ren</span><span class="p">)</span>
+
+<span class="n">fvtk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">streamlines</span><span class="p">,</span> <span class="n">line_colors</span><span class="p">(</span><span class="n">streamlines</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;Saving illustration as csd_streamlines_eudx.png&#39;</span><span class="p">)</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">out_path</span><span class="o">=</span><span class="s">&#39;csd_streamlines_eudx.png&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">900</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id5">
+<img alt="../_images/csd_streamlines_eudx.png" src="../_images/csd_streamlines_eudx.png" />
+<p class="caption"><span class="caption-text"><strong>CSD-based streamlines using EuDX</strong></span></p>
+</div>
+<p>We used above <code class="docutils literal"><span class="pre">fvtk.record</span></code> because we want to create a figure for the
+tutorial but you can visualize the same objects in 3D using
+<code class="docutils literal"><span class="pre">fvtk.show(ren)</span></code>.</p>
+<p>To learn more about this process you could start playing with the number of
+seed points or, even better, specify seeds to be in specific regions of interest
+in the brain.</p>
+<p><code class="docutils literal"><span class="pre">fvtk</span></code> gives some minimal interactivity however you can save the resulting
+streamlines in a Trackvis (.trk) format and load them for example with the
+<a class="reference external" href="https://github.com/scilus/fibernavigator">Fibernavigator</a> or another tool for medical visualization.</p>
+<p>Finally, let&#8217;s save the streamlines as a (.trk) file and FA as a Nifti image.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+
+<span class="n">hdr</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">trackvis</span><span class="o">.</span><span class="n">empty_header</span><span class="p">()</span>
+<span class="n">hdr</span><span class="p">[</span><span class="s">&#39;voxel_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_header</span><span class="p">()</span><span class="o">.</span><span class="n">get_zooms</span><span class="p">()[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">hdr</span><span class="p">[</span><span class="s">&#39;voxel_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;LAS&#39;</span>
+<span class="n">hdr</span><span class="p">[</span><span class="s">&#39;dim&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FA</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">csd_streamlines_trk</span> <span class="o">=</span> <span class="p">((</span><span class="n">sl</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">sl</span> <span class="ow">in</span> <span class="n">streamlines</span><span class="p">)</span>
+
+<span class="n">csd_sl_fname</span> <span class="o">=</span> <span class="s">&#39;csd_streamline.trk&#39;</span>
+
+<span class="n">nib</span><span class="o">.</span><span class="n">trackvis</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">csd_sl_fname</span><span class="p">,</span> <span class="n">csd_streamlines_trk</span><span class="p">,</span> <span class="n">hdr</span><span class="p">,</span> <span class="n">points_space</span><span class="o">=</span><span class="s">&#39;voxel&#39;</span><span class="p">)</span>
+
+<span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">FA</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()),</span> <span class="s">&#39;FA_map.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In Windows if you get a runtime error about frozen executable please start
+your script by adding your code above in a <code class="docutils literal"><span class="pre">main</span></code> function and use:</p>
+<dl class="docutils">
+<dt>if __name__ == &#8216;__main__&#8217;:</dt>
+<dd>import multiprocessing
+multiprocessing.freeze_support()
+main()</dd>
+</dl>
+<table class="docutils citation" frame="void" id="garyfallidis12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[Garyfallidis12]</a></td><td>Garyfallidis E., &#8220;Towards an accurate brain tractography&#8221;, PhD thesis, University of Cambridge, 2012.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="tournier07" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[Tournier07]</a></td><td>J-D. Tournier, F. Calamante and A. Connelly, &#8220;Robust determination of the fibre orientation distribution in diffusion MRI: Non-negativity constrained super-resolved spherical deconvolution&#8221;, Neuroimage, vol. 35, no. 4, pp. 1459-1472, 2007.</td></tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dipy has a new and very modular fiber tracking machinery. Our new machinery
+for fiber tracking is featured in the example <a class="reference internal" href="#example-tracking-quick-start"><span>Tracking Quick Start</span></a>.</p>
+</div>
+<div class="admonition-example-source-code admonition">
+<p class="first admonition-title">Example source code</p>
+<p class="last">You can download <a class="reference download internal" href="../_downloads/tracking_quick_start.py"><code class="xref download docutils literal"><span class="pre">the</span> <span class="pre">full</span> <span class="pre">source</span> <span class="pre">code</span> <span class="pre">of</span> <span class="pre">this</span> <span class="pre">example</span></code></a>.
+This same script is also included in the dipy source distribution under the
+<code class="file docutils literal"><span class="pre">doc/examples/</span></code> directory.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+  <li><a href="../index.html">Home</a> |&nbsp;</li>
+  <li><a href="../stateoftheart.html">Overview</a> |&nbsp;</li>
+  <li><a href="../examples_index.html">Gallery</a> |&nbsp;</li>
+  <li><a href="../installation.html">Download</a> |&nbsp;</li>
+  <li><a href="../subscribe.html">Subscribe</a> |&nbsp;</li>
+  <li><a href="../developers.html">Developers</a> |&nbsp;</li>
+  <li><a href="../cite.html">Cite</a> &nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2015, dipy developers &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>

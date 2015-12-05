@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dipy &mdash; dipy 0.10.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/dipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="dipy 0.10.1 documentation" href="../index.html" />
+  <meta name="keywords" content="dipy, dMRI, DTI, DSI, diffusion MRI, Tensor,
+  neuroimaging, python, neuroscience, Eleftherios, Garyfallidis, tractography,
+  streamlines, fiber tracking">
+
+  </head>
+  <body role="document">
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+ <a href="../index.html">
+  <img src="../_static/dipy-banner.png" alt="dipy logo"  border="0" />
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+  <li><a href="../index.html">Home</a> |&nbsp;</li>
+  <li><a href="../stateoftheart.html">Overview</a> |&nbsp;</li>
+  <li><a href="../examples_index.html">Gallery</a> |&nbsp;</li>
+  <li><a href="../installation.html">Download</a> |&nbsp;</li>
+  <li><a href="../subscribe.html">Subscribe</a> |&nbsp;</li>
+  <li><a href="../developers.html">Developers</a> |&nbsp;</li>
+  <li><a href="../cite.html">Cite</a> &nbsp;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+<h4> Site Navigation </h4>
+  <ul>
+    <li><a href="../documentation.html">Documentation</a></li>
+    <li><a href="../devel/index.html">Development</a></li>
+  </ul>
+
+<h4> NIPY Community </h4>
+  <ul class="simple">
+    <li><a class="reference external"
+	href="http://nipy.org/">Community Home</a></li>
+    <li><a class="reference external"
+	href="http://nipy.org/software/projects/">NIPY Projects</a></li>
+    <li><a class="reference external"
+	href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing List</a></li>
+    <li><a class="reference external"
+	href="http://nipy.org/software/license/index.html">License</a></li>
+  </ul>
+
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples_built/segment_quickbundles.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+
+<div id="searchbox-ml" style="display: none">
+  <h3>Search mailing list archive</h3>
+  <script type="text/javascript">
+    function mlsearch(curobj)
+    {
+    curobj.q.value="site:mail.python.org/pipermail/neuroimaging/ "+curobj.userquery.value
+    }
+  </script>
+  <form action="http://www.google.com/search" method="get" onSubmit="mlsearch(this)">
+    <input name="userquery" size="13" type="text" /> <input type="submit" value="Go" />
+    <input name="q" type="hidden" />
+  </form>
+</div>
+
+<div id="searchbox-site" style="display: none">
+  <h3>Search this site</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="13" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox-ml').show(0);</script>
+<script type="text/javascript">$('#searchbox-site').show(0);</script>
+
+
+<script>
+     ((window.gitter = {}).chat = {}).options = {
+       room: 'nipy/dipy'
+     };
+</script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tractography-clustering-with-quickbundles">
+<span id="example-segment-quickbundles"></span><h1>Tractography Clustering with QuickBundles<a class="headerlink" href="#tractography-clustering-with-quickbundles" title="Permalink to this headline">¶</a></h1>
+<p>This example explains how we can use QuickBundles <a class="reference internal" href="../reference/dipy.segment.html#id19" id="id1">[Garyfallidis12]</a> to
+simplify/cluster streamlines.</p>
+<p>First import the necessary modules.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nibabel</span> <span class="kn">import</span> <span class="n">trackvis</span> <span class="k">as</span> <span class="n">tv</span>
+<span class="kn">from</span> <span class="nn">dipy.segment.clustering</span> <span class="kn">import</span> <span class="n">QuickBundles</span>
+<span class="kn">from</span> <span class="nn">dipy.io.pickles</span> <span class="kn">import</span> <span class="n">save_pickle</span>
+<span class="kn">from</span> <span class="nn">dipy.data</span> <span class="kn">import</span> <span class="n">get_data</span>
+<span class="kn">from</span> <span class="nn">dipy.viz</span> <span class="kn">import</span> <span class="n">fvtk</span>
+</pre></div>
+</div>
+<p>For educational purposes we will try to cluster a small streamline bundle known
+from neuroanatomy as the fornix.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fname</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s">&#39;fornix&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load fornix streamlines.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">streams</span><span class="p">,</span> <span class="n">hdr</span> <span class="o">=</span> <span class="n">tv</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+
+<span class="n">streamlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Perform QuickBundles clustering using the MDF metric and a 10mm distance
+threshold. Keep in mind that since the MDF metric requires streamlines to have
+the same number of points, the clustering algorithm will internally use a
+representation of streamlines that have been automatically downsampled/upsampled
+so they have only 12 points (To set manually the number of points,
+see <a class="reference internal" href="segment_clustering_features.html#clustering-examples-resamplefeature"><span>Resample Feature</span></a>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">qb</span> <span class="o">=</span> <span class="n">QuickBundles</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">10.</span><span class="p">)</span>
+<span class="n">clusters</span> <span class="o">=</span> <span class="n">qb</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">streamlines</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>clusters</cite> is a <cite>ClusterMap</cite> object which contains attributes that
+provide information about the clustering result.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="s">&quot;Nb. clusters:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Cluster sizes:&quot;</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">clusters</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Small clusters:&quot;</span><span class="p">,</span> <span class="n">clusters</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Streamlines indices of the first cluster:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">clusters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Centroid of the last cluster:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">clusters</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Nb. clusters: 4
+
+Cluster sizes: [64, 191, 47, 1]
+
+Small clusters: array([False, False, False, True], dtype=bool)
+
+Streamlines indices of the first cluster:
+[0, 7, 8, 10, 11, 12, 13, 14, 15, 18, 26, 30, 33, 35, 41, 65, 66, 85, 100,
+ 101, 105, 115, 116, 119, 122, 123, 124, 125, 126, 128, 129, 135, 139, 142,
+ 143, 144, 148, 151, 159, 167, 175, 180, 181, 185, 200, 208, 210, 224, 237,
+ 246, 249, 251, 256, 267, 270, 280, 284, 293, 296, 297, 299]
+
+Centroid of the last cluster:
+array([[  84.83773804,  117.92590332,   77.32278442],
+       [  86.10850525,  115.84362793,   81.91885376],
+       [  86.40357208,  112.25676727,   85.72930145],
+       [  86.48336792,  107.60327911,   88.13782501],
+       [  86.23897552,  102.5100708 ,   89.29447174],
+       [  85.04563904,   97.46020508,   88.54240417],
+       [  82.60240173,   93.14851379,   86.84208679],
+       [  78.98937225,   89.57682037,   85.63652039],
+       [  74.72344208,   86.60827637,   84.9391861 ],
+       [  70.40846252,   85.15874481,   82.4484024 ],
+       [  66.74534607,   86.00262451,   78.82582092],
+       [  64.02451324,   88.43942261,   75.0697403 ]], dtype=float32)
+</pre></div>
+</div>
+<p><cite>clusters</cite> has also attributes like <cite>centroids</cite> (cluster representatives), and
+methods like <cite>add</cite>, <cite>remove</cite>, and <cite>clear</cite> to modify the clustering result.</p>
+<p>Lets first show the initial dataset.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ren</span> <span class="o">=</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">ren</span><span class="p">()</span>
+<span class="n">ren</span><span class="o">.</span><span class="n">SetBackground</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">streamtube</span><span class="p">(</span><span class="n">streamlines</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">white</span><span class="p">))</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">n_frames</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_path</span><span class="o">=</span><span class="s">&#39;fornix_initial.png&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id3">
+<img alt="../_images/fornix_initial.png" src="../_images/fornix_initial.png" />
+<p class="caption"><span class="caption-text"><strong>Initial Fornix dataset</strong>.</span></p>
+</div>
+<p>Show the centroids of the fornix after clustering (with random colors):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">colormap</span> <span class="o">=</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">create_colormap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)))</span>
+
+<span class="n">fvtk</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">ren</span><span class="p">)</span>
+<span class="n">ren</span><span class="o">.</span><span class="n">SetBackground</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">streamtube</span><span class="p">(</span><span class="n">streamlines</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.05</span><span class="p">))</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">streamtube</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">centroids</span><span class="p">,</span> <span class="n">colormap</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.4</span><span class="p">))</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">n_frames</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_path</span><span class="o">=</span><span class="s">&#39;fornix_centroids.png&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id4">
+<img alt="../_images/fornix_centroids.png" src="../_images/fornix_centroids.png" />
+<p class="caption"><span class="caption-text"><strong>Showing the different QuickBundles centroids with random colors</strong>.</span></p>
+</div>
+<p>Show the labeled fornix (colors from centroids).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">colormap_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">streamlines</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">colormap</span><span class="p">):</span>
+    <span class="n">colormap_full</span><span class="p">[</span><span class="n">cluster</span><span class="o">.</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+
+<span class="n">fvtk</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">ren</span><span class="p">)</span>
+<span class="n">ren</span><span class="o">.</span><span class="n">SetBackground</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">fvtk</span><span class="o">.</span><span class="n">streamtube</span><span class="p">(</span><span class="n">streamlines</span><span class="p">,</span> <span class="n">colormap_full</span><span class="p">))</span>
+<span class="n">fvtk</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ren</span><span class="p">,</span> <span class="n">n_frames</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_path</span><span class="o">=</span><span class="s">&#39;fornix_clusters.png&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id5">
+<img alt="../_images/fornix_clusters.png" src="../_images/fornix_clusters.png" />
+<p class="caption"><span class="caption-text"><strong>Showing the different clusters</strong>.</span></p>
+</div>
+<p>It is also possible to save the complete <cite>ClusterMap</cite> object with pickling.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">save_pickle</span><span class="p">(</span><span class="s">&#39;QB.pkl&#39;</span><span class="p">,</span> <span class="n">clusters</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, here is a video of QuickBundles applied on a larger dataset.</p>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/kstL7KKqu94" frameborder="0" allowfullscreen></iframe><table class="docutils citation" frame="void" id="garyfallidis12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[Garyfallidis12]</a></td><td>Garyfallidis E. et al., QuickBundles a method for
+tractography simplification, Frontiers in Neuroscience, vol
+6, no 175, 2012.</td></tr>
+</tbody>
+</table>
+<div class="admonition-example-source-code admonition">
+<p class="first admonition-title">Example source code</p>
+<p class="last">You can download <a class="reference download internal" href="../_downloads/segment_quickbundles.py"><code class="xref download docutils literal"><span class="pre">the</span> <span class="pre">full</span> <span class="pre">source</span> <span class="pre">code</span> <span class="pre">of</span> <span class="pre">this</span> <span class="pre">example</span></code></a>.
+This same script is also included in the dipy source distribution under the
+<code class="file docutils literal"><span class="pre">doc/examples/</span></code> directory.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+  <li><a href="../index.html">Home</a> |&nbsp;</li>
+  <li><a href="../stateoftheart.html">Overview</a> |&nbsp;</li>
+  <li><a href="../examples_index.html">Gallery</a> |&nbsp;</li>
+  <li><a href="../installation.html">Download</a> |&nbsp;</li>
+  <li><a href="../subscribe.html">Subscribe</a> |&nbsp;</li>
+  <li><a href="../developers.html">Developers</a> |&nbsp;</li>
+  <li><a href="../cite.html">Cite</a> &nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2015, dipy developers &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>

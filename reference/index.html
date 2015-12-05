@@ -1,0 +1,1495 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dipy &mdash; dipy 0.10.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/dipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="dipy 0.10.1 documentation" href="../index.html" />
+    <link rel="up" title="Documentation" href="../documentation.html" />
+    <link rel="next" title="dipy" href="dipy.html" />
+    <link rel="prev" title="Spherical coordinates" href="../theory/spherical.html" />
+  <meta name="keywords" content="dipy, dMRI, DTI, DSI, diffusion MRI, Tensor,
+  neuroimaging, python, neuroscience, Eleftherios, Garyfallidis, tractography,
+  streamlines, fiber tracking">
+
+  </head>
+  <body role="document">
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+ <a href="../index.html">
+  <img src="../_static/dipy-banner.png" alt="dipy logo"  border="0" />
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dipy.html" title="dipy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../theory/spherical.html" title="Spherical coordinates"
+             accesskey="P">previous</a> |</li>
+  <li><a href="../index.html">Home</a> |&nbsp;</li>
+  <li><a href="../stateoftheart.html">Overview</a> |&nbsp;</li>
+  <li><a href="../examples_index.html">Gallery</a> |&nbsp;</li>
+  <li><a href="../installation.html">Download</a> |&nbsp;</li>
+  <li><a href="../subscribe.html">Subscribe</a> |&nbsp;</li>
+  <li><a href="../developers.html">Developers</a> |&nbsp;</li>
+  <li><a href="../cite.html">Cite</a> &nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../documentation.html" accesskey="U">Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+<h4> Site Navigation </h4>
+  <ul>
+    <li><a href="../documentation.html">Documentation</a></li>
+    <li><a href="../devel/index.html">Development</a></li>
+  </ul>
+
+<h4> NIPY Community </h4>
+  <ul class="simple">
+    <li><a class="reference external"
+	href="http://nipy.org/">Community Home</a></li>
+    <li><a class="reference external"
+	href="http://nipy.org/software/projects/">NIPY Projects</a></li>
+    <li><a class="reference external"
+	href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing List</a></li>
+    <li><a class="reference external"
+	href="http://nipy.org/software/license/index.html">License</a></li>
+  </ul>
+
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../theory/spherical.html"
+                        title="previous chapter">Spherical coordinates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dipy.html"
+                        title="next chapter"><code class="docutils literal"><span class="pre">dipy</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+
+<div id="searchbox-ml" style="display: none">
+  <h3>Search mailing list archive</h3>
+  <script type="text/javascript">
+    function mlsearch(curobj)
+    {
+    curobj.q.value="site:mail.python.org/pipermail/neuroimaging/ "+curobj.userquery.value
+    }
+  </script>
+  <form action="http://www.google.com/search" method="get" onSubmit="mlsearch(this)">
+    <input name="userquery" size="13" type="text" /> <input type="submit" value="Go" />
+    <input name="q" type="hidden" />
+  </form>
+</div>
+
+<div id="searchbox-site" style="display: none">
+  <h3>Search this site</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="13" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox-ml').show(0);</script>
+<script type="text/javascript">$('#searchbox-site').show(0);</script>
+
+
+<script>
+     ((window.gitter = {}).chat = {}).options = {
+       room: 'nipy/dipy'
+     };
+</script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dipy.html"><code class="docutils literal"><span class="pre">dipy</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.html#diffusion-imaging-in-python">Diffusion Imaging in Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.html#bench">bench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.html#get-info">get_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.html#test">test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.__config__.html"><code class="docutils literal"><span class="pre">__config__</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.align.html"><code class="docutils literal"><span class="pre">align</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.aniso2iso">Module: <code class="docutils literal"><span class="pre">align.aniso2iso</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.imaffine">Module: <code class="docutils literal"><span class="pre">align.imaffine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.imwarp">Module: <code class="docutils literal"><span class="pre">align.imwarp</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.metrics">Module: <code class="docutils literal"><span class="pre">align.metrics</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.reslice">Module: <code class="docutils literal"><span class="pre">align.reslice</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.scalespace">Module: <code class="docutils literal"><span class="pre">align.scalespace</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.align.html#module-dipy.align.streamlinear">Module: <code class="docutils literal"><span class="pre">align.streamlinear</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bunch"><code class="docutils literal"><span class="pre">Bunch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#floating"><code class="docutils literal"><span class="pre">floating</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#resample">resample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#reslice">reslice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#warn">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#affineinversionerror"><code class="docutils literal"><span class="pre">AffineInversionError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#affinemap"><code class="docutils literal"><span class="pre">AffineMap</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#affineregistration"><code class="docutils literal"><span class="pre">AffineRegistration</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#isotropicscalespace"><code class="docutils literal"><span class="pre">IsotropicScaleSpace</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#mutualinformationmetric"><code class="docutils literal"><span class="pre">MutualInformationMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#optimizer"><code class="docutils literal"><span class="pre">Optimizer</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#parzenjointhistogram"><code class="docutils literal"><span class="pre">ParzenJointHistogram</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#scalespace"><code class="docutils literal"><span class="pre">ScaleSpace</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#align-centers-of-mass">align_centers_of_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#align-geometric-centers">align_geometric_centers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#align-origins">align_origins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#compute-parzen-mi">compute_parzen_mi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#get-direction-and-spacings">get_direction_and_spacings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#sample-domain-regular">sample_domain_regular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#transform-centers-of-mass">transform_centers_of_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#transform-geometric-centers">transform_geometric_centers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#transform-origins">transform_origins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id1">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id2"><code class="docutils literal"><span class="pre">Bunch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#diffeomorphicmap"><code class="docutils literal"><span class="pre">DiffeomorphicMap</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#diffeomorphicregistration"><code class="docutils literal"><span class="pre">DiffeomorphicRegistration</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id3"><code class="docutils literal"><span class="pre">ScaleSpace</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#symmetricdiffeomorphicregistration"><code class="docutils literal"><span class="pre">SymmetricDiffeomorphicRegistration</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id4"><code class="docutils literal"><span class="pre">floating</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id5">get_direction_and_spacings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#mult-aff">mult_aff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#with-metaclass">with_metaclass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#ccmetric"><code class="docutils literal"><span class="pre">CCMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#emmetric"><code class="docutils literal"><span class="pre">EMMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#ssdmetric"><code class="docutils literal"><span class="pre">SSDMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#similaritymetric"><code class="docutils literal"><span class="pre">SimilarityMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id6"><code class="docutils literal"><span class="pre">floating</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#gradient">gradient</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#v-cycle-2d">v_cycle_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#v-cycle-3d">v_cycle_3d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id7">with_metaclass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#pool">Pool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#affine-transform">affine_transform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#cpu-count">cpu_count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id8">reslice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id9"><code class="docutils literal"><span class="pre">IsotropicScaleSpace</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id10"><code class="docutils literal"><span class="pre">ScaleSpace</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id11"><code class="docutils literal"><span class="pre">floating</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bundlemindistancematrixmetric"><code class="docutils literal"><span class="pre">BundleMinDistanceMatrixMetric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bundlemindistancemetric"><code class="docutils literal"><span class="pre">BundleMinDistanceMetric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bundlesumdistancematrixmetric"><code class="docutils literal"><span class="pre">BundleSumDistanceMatrixMetric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id13"><code class="docutils literal"><span class="pre">Optimizer</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#streamlinedistancemetric"><code class="docutils literal"><span class="pre">StreamlineDistanceMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#streamlinelinearregistration"><code class="docutils literal"><span class="pre">StreamlineLinearRegistration</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#streamlineregistrationmap"><code class="docutils literal"><span class="pre">StreamlineRegistrationMap</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bundle-min-distance">bundle_min_distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bundle-min-distance-fast">bundle_min_distance_fast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#bundle-sum-distance">bundle_sum_distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#center-streamlines">center_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#compose-matrix">compose_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#compose-matrix44">compose_matrix44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#compose-transformations">compose_transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#decompose-matrix">decompose_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#decompose-matrix44">decompose_matrix44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#distance-matrix-mdf">distance_matrix_mdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#transform-streamlines">transform_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#unlist-streamlines">unlist_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.align.html#id17">with_metaclass</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.boots.html"><code class="docutils literal"><span class="pre">boots</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.core.html"><code class="docutils literal"><span class="pre">core</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.geometry">Module: <code class="docutils literal"><span class="pre">core.geometry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.gradients">Module: <code class="docutils literal"><span class="pre">core.gradients</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.graph">Module: <code class="docutils literal"><span class="pre">core.graph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.histeq">Module: <code class="docutils literal"><span class="pre">core.histeq</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.ndindex">Module: <code class="docutils literal"><span class="pre">core.ndindex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.onetime">Module: <code class="docutils literal"><span class="pre">core.onetime</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.optimize">Module: <code class="docutils literal"><span class="pre">core.optimize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.profile">Module: <code class="docutils literal"><span class="pre">core.profile</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.rng">Module: <code class="docutils literal"><span class="pre">core.rng</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.sphere">Module: <code class="docutils literal"><span class="pre">core.sphere</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.sphere_stats">Module: <code class="docutils literal"><span class="pre">core.sphere_stats</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.core.html#module-dipy.core.subdivide_octahedron">Module: <code class="docutils literal"><span class="pre">core.subdivide_octahedron</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#test">test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#cart2sphere">cart2sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#cart-distance">cart_distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#circumradius">circumradius</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#compose-matrix">compose_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#compose-transformations">compose_transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#decompose-matrix">decompose_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#dist-to-corner">dist_to_corner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#euler-matrix">euler_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#lambert-equal-area-projection-cart">lambert_equal_area_projection_cart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#lambert-equal-area-projection-polar">lambert_equal_area_projection_polar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#nearest-pos-semi-def">nearest_pos_semi_def</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#normalized-vector">normalized_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#perpendicular-directions">perpendicular_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#rodrigues-axis-rotation">rodrigues_axis_rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#sph2latlon">sph2latlon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#sphere2cart">sphere2cart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#sphere-distance">sphere_distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#vec2vec-rotmat">vec2vec_rotmat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#vector-cosine">vector_cosine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#vector-norm">vector_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#gradienttable"><code class="docutils literal"><span class="pre">GradientTable</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#auto-attr">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#gradient-table">gradient_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#gradient-table-from-bvals-bvecs">gradient_table_from_bvals_bvecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id4">vector_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#graph"><code class="docutils literal"><span class="pre">Graph</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#histeq">histeq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#as-strided">as_strided</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#ndindex">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#onetimeproperty"><code class="docutils literal"><span class="pre">OneTimeProperty</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#resetmixin"><code class="docutils literal"><span class="pre">ResetMixin</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id5">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#setattr-on-read">setattr_on_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#looseversion"><code class="docutils literal"><span class="pre">LooseVersion</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#nonnegativeleastsquares"><code class="docutils literal"><span class="pre">NonNegativeLeastSquares</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#optimizer"><code class="docutils literal"><span class="pre">Optimizer</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#sklearnlinearsolver"><code class="docutils literal"><span class="pre">SKLearnLinearSolver</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#minimize">minimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#sparse-nnls">sparse_nnls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#spdot">spdot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#with-metaclass">with_metaclass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#profiler"><code class="docutils literal"><span class="pre">Profiler</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#optional-package">optional_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#lecuyer">LEcuyer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#wichmannhill1982">WichmannHill1982</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#wichmannhill2006">WichmannHill2006</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#architecture">architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#floor">floor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#hemisphere"><code class="docutils literal"><span class="pre">HemiSphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#sphere"><code class="docutils literal"><span class="pre">Sphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#xrange"><code class="docutils literal"><span class="pre">xrange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id39">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id40">cart2sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#disperse-charges">disperse_charges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#euler-characteristic-check">euler_characteristic_check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#faces-from-sphere-vertices">faces_from_sphere_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#interp-rbf">interp_rbf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#remove-similar-vertices">remove_similar_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id41">sphere2cart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#unique-edges">unique_edges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#unique-sets">unique_sets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id42">vector_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#permutations"><code class="docutils literal"><span class="pre">permutations</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#angular-similarity">angular_similarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#compare-orientation-sets">compare_orientation_sets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#eigenstats">eigenstats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#random-uniform-on-sphere">random_uniform_on_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#id44"><code class="docutils literal"><span class="pre">HemiSphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#create-unit-hemisphere">create_unit_hemisphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.core.html#create-unit-sphere">create_unit_sphere</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.data.html"><code class="docutils literal"><span class="pre">data</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.data.html#module-dipy.data.fetcher">Module: <code class="docutils literal"><span class="pre">data.fetcher</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#dataerror"><code class="docutils literal"><span class="pre">DataError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#gradienttable"><code class="docutils literal"><span class="pre">GradientTable</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#hemisphere"><code class="docutils literal"><span class="pre">HemiSphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#sphere"><code class="docutils literal"><span class="pre">Sphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#sticksandball">SticksAndBall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#as-native-array">as_native_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#dirname">dirname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#dsi-deconv-voxels">dsi_deconv_voxels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#dsi-voxels">dsi_voxels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-bundles-2-subjects">fetch_bundles_2_subjects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-cenir-multib">fetch_cenir_multib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-isbi2013-2shell">fetch_isbi2013_2shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-mni-template">fetch_mni_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-scil-b0">fetch_scil_b0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-sherbrooke-3shell">fetch_sherbrooke_3shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-stanford-hardi">fetch_stanford_hardi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-stanford-pve-maps">fetch_stanford_pve_maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-stanford-t1">fetch_stanford_t1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-syn-data">fetch_syn_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-taiwan-ntu-dsi">fetch_taiwan_ntu_dsi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-viz-icons">fetch_viz_icons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-3shell-gtab">get_3shell_gtab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-cmap">get_cmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-data">get_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-gtab-taiwan-dsi">get_gtab_taiwan_dsi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-isbi2013-2shell-gtab">get_isbi2013_2shell_gtab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-sim-voxels">get_sim_voxels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-skeleton">get_skeleton</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#get-sphere">get_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#gradient-table">gradient_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#load">load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#loads-compat">loads_compat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#matlab-life-results">matlab_life_results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#mrtrix-spherical-functions">mrtrix_spherical_functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#pjoin">pjoin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-bundles-2-subjects">read_bundles_2_subjects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-cenir-multib">read_cenir_multib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-isbi2013-2shell">read_isbi2013_2shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-mni-template">read_mni_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-scil-b0">read_scil_b0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-sherbrooke-3shell">read_sherbrooke_3shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-stanford-hardi">read_stanford_hardi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-stanford-labels">read_stanford_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-stanford-pve-maps">read_stanford_pve_maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-stanford-t1">read_stanford_t1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-syn-data">read_syn_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-taiwan-ntu-dsi">read_taiwan_ntu_dsi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-viz-icons">read_viz_icons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#relist-streamlines">relist_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#two-cingulum-bundles">two_cingulum_bundles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetchererror"><code class="docutils literal"><span class="pre">FetcherError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#check-md5">check_md5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#copyfileobj">copyfileobj</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id8">fetch_bundles_2_subjects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id9">fetch_cenir_multib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-data">fetch_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id11">fetch_isbi2013_2shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id12">fetch_mni_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id14">fetch_scil_b0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id15">fetch_sherbrooke_3shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id16">fetch_stanford_hardi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#fetch-stanford-labels">fetch_stanford_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id17">fetch_stanford_pve_maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id18">fetch_stanford_t1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id19">fetch_syn_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id20">fetch_taiwan_ntu_dsi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id21">fetch_viz_icons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id22">gradient_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#md5">md5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id23">pjoin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id24">read_bundles_2_subjects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-bvals-bvecs">read_bvals_bvecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id27">read_cenir_multib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id29">read_isbi2013_2shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id30">read_mni_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id32">read_scil_b0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id33">read_sherbrooke_3shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#read-siemens-scil-b0">read_siemens_scil_b0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id34">read_stanford_hardi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id35">read_stanford_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id36">read_stanford_pve_maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id37">read_stanford_t1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id38">read_syn_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id39">read_taiwan_ntu_dsi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#id40">read_viz_icons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.data.html#urlopen">urlopen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.denoise.html"><code class="docutils literal"><span class="pre">denoise</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.denoise.html#module-dipy.denoise.nlmeans">Module: <code class="docutils literal"><span class="pre">denoise.nlmeans</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.denoise.html#module-dipy.denoise.noise_estimate">Module: <code class="docutils literal"><span class="pre">denoise.noise_estimate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#bench">bench</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#test">test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#nlmeans">nlmeans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#nlmeans-3d">nlmeans_3d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#convolve">convolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#estimate-sigma">estimate_sigma</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.denoise.html#piesno">piesno</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.direction.html"><code class="docutils literal"><span class="pre">direction</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.direction.html#module-dipy.direction.peaks">Module: <code class="docutils literal"><span class="pre">direction.peaks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.direction.html#module-dipy.direction.probabilistic_direction_getter">Module: <code class="docutils literal"><span class="pre">direction.probabilistic_direction_getter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#deterministicmaximumdirectiongetter"><code class="docutils literal"><span class="pre">DeterministicMaximumDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#hemisphere"><code class="docutils literal"><span class="pre">HemiSphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#intemporarydirectory"><code class="docutils literal"><span class="pre">InTemporaryDirectory</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#peaksandmetrics"><code class="docutils literal"><span class="pre">PeaksAndMetrics</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#peaksandmetricsdirectiongetter"><code class="docutils literal"><span class="pre">PeaksAndMetricsDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#probabilisticdirectiongetter"><code class="docutils literal"><span class="pre">ProbabilisticDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#sphere"><code class="docutils literal"><span class="pre">Sphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#repeat"><code class="docutils literal"><span class="pre">repeat</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#xrange"><code class="docutils literal"><span class="pre">xrange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#pool">Pool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#cpu-count">cpu_count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#gfa">gfa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#local-maxima">local_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#ndindex">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#peak-directions">peak_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#peak-directions-nl">peak_directions_nl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#peaks-from-model">peaks_from_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#remove-similar-vertices">remove_similar_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#reshape-peaks-for-visualization">reshape_peaks_for_visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#search-descending">search_descending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#sh-to-sf-matrix">sh_to_sf_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#warn">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id1"><code class="docutils literal"><span class="pre">HemiSphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id2"><code class="docutils literal"><span class="pre">InTemporaryDirectory</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id3"><code class="docutils literal"><span class="pre">PeaksAndMetrics</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id4"><code class="docutils literal"><span class="pre">PeaksAndMetricsDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id5"><code class="docutils literal"><span class="pre">Sphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id6"><code class="docutils literal"><span class="pre">repeat</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id7"><code class="docutils literal"><span class="pre">xrange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id8">Pool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id9">cpu_count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id10">gfa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id11">local_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id12">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id13">peak_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id14">peak_directions_nl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id15">peaks_from_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id16">remove_similar_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id17">reshape_peaks_for_visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id18">search_descending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id19">sh_to_sf_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id20">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id21"><code class="docutils literal"><span class="pre">DeterministicMaximumDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#directiongetter"><code class="docutils literal"><span class="pre">DirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#peakdirectiongetter"><code class="docutils literal"><span class="pre">PeakDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#pmfgen"><code class="docutils literal"><span class="pre">PmfGen</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id22"><code class="docutils literal"><span class="pre">ProbabilisticDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#shcoeffpmfgen"><code class="docutils literal"><span class="pre">SHCoeffPmfGen</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#simplepmfgen"><code class="docutils literal"><span class="pre">SimplePmfGen</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#order-from-ncoef">order_from_ncoef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#id23">peak_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.direction.html#trilinear-interpolate4d">trilinear_interpolate4d</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.external.html"><code class="docutils literal"><span class="pre">external</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.external.html#module-dipy.external.fsl">Module: <code class="docutils literal"><span class="pre">external.fsl</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#test">test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#dpy"><code class="docutils literal"><span class="pre">Dpy</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#fslerror"><code class="docutils literal"><span class="pre">FSLError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#intemporarydirectory"><code class="docutils literal"><span class="pre">InTemporaryDirectory</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#popen"><code class="docutils literal"><span class="pre">Popen</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#affine-transform">affine_transform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#apply-warp">apply_warp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#bet">bet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#create-displacements">create_displacements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#dcm2nii">dcm2nii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#eddy-correct">eddy_correct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#flirt2aff">flirt2aff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#flirt2aff-files">flirt2aff_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#have-flirt">have_flirt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#mc">mc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#pipe">pipe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#pjoin">pjoin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#run-flirt-imgs">run_flirt_imgs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#warp-displacements">warp_displacements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#warp-displacements-tracks">warp_displacements_tracks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.external.html#write-bvals-bvecs">write_bvals_bvecs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.io.html"><code class="docutils literal"><span class="pre">io</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.io.html#module-dipy.io.bvectxt">Module: <code class="docutils literal"><span class="pre">io.bvectxt</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.io.html#module-dipy.io.dpy">Module: <code class="docutils literal"><span class="pre">io.dpy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.io.html#module-dipy.io.gradients">Module: <code class="docutils literal"><span class="pre">io.gradients</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.io.html#module-dipy.io.pickles">Module: <code class="docutils literal"><span class="pre">io.pickles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.io.html#module-dipy.io.trackvis">Module: <code class="docutils literal"><span class="pre">io.trackvis</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#dpy"><code class="docutils literal"><span class="pre">Dpy</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#load-pickle">load_pickle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#orientation-from-string">orientation_from_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#orientation-to-string">orientation_to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#ornt-mapping">ornt_mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#read-bvals-bvecs">read_bvals_bvecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#read-bvec-file">read_bvec_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#reorient-on-axis">reorient_on_axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#reorient-vectors">reorient_vectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#save-pickle">save_pickle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id2">orientation_from_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id3">orientation_to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id4">ornt_mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id5">read_bvec_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id6">reorient_on_axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id7">reorient_vectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#splitext">splitext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id8"><code class="docutils literal"><span class="pre">Dpy</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#optional-package">optional_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#setup-module">setup_module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id9">read_bvals_bvecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id10">splitext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id11">load_pickle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#id12">save_pickle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.io.html#save-trk">save_trk</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.reconst.html"><code class="docutils literal"><span class="pre">reconst</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.base">Module: <code class="docutils literal"><span class="pre">reconst.base</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.benchmarks">Module: <code class="docutils literal"><span class="pre">reconst.benchmarks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.benchmarks.bench_bounding_box">Module: <code class="docutils literal"><span class="pre">reconst.benchmarks.bench_bounding_box</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.benchmarks.bench_csd">Module: <code class="docutils literal"><span class="pre">reconst.benchmarks.bench_csd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.benchmarks.bench_peaks">Module: <code class="docutils literal"><span class="pre">reconst.benchmarks.bench_peaks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.benchmarks.bench_squash">Module: <code class="docutils literal"><span class="pre">reconst.benchmarks.bench_squash</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.benchmarks.bench_vec_val_sum">Module: <code class="docutils literal"><span class="pre">reconst.benchmarks.bench_vec_val_sum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.cache">Module: <code class="docutils literal"><span class="pre">reconst.cache</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.cross_validation">Module: <code class="docutils literal"><span class="pre">reconst.cross_validation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.csdeconv">Module: <code class="docutils literal"><span class="pre">reconst.csdeconv</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.dki">Module: <code class="docutils literal"><span class="pre">reconst.dki</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.dsi">Module: <code class="docutils literal"><span class="pre">reconst.dsi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.dti">Module: <code class="docutils literal"><span class="pre">reconst.dti</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.gqi">Module: <code class="docutils literal"><span class="pre">reconst.gqi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.interpolate">Module: <code class="docutils literal"><span class="pre">reconst.interpolate</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.mapmri">Module: <code class="docutils literal"><span class="pre">reconst.mapmri</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.multi_voxel">Module: <code class="docutils literal"><span class="pre">reconst.multi_voxel</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.odf">Module: <code class="docutils literal"><span class="pre">reconst.odf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.peaks">Module: <code class="docutils literal"><span class="pre">reconst.peaks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.sfm">Module: <code class="docutils literal"><span class="pre">reconst.sfm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.shm">Module: <code class="docutils literal"><span class="pre">reconst.shm</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.reconst.html#module-dipy.reconst.shore">Module: <code class="docutils literal"><span class="pre">reconst.shore</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bench">bench</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#test">test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#reconstfit"><code class="docutils literal"><span class="pre">ReconstFit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#reconstmodel"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bench-bounding-box">bench_bounding_box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bounding-box">bounding_box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#measure">measure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#constrainedsphericaldeconvmodel"><code class="docutils literal"><span class="pre">ConstrainedSphericalDeconvModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#gradienttable"><code class="docutils literal"><span class="pre">GradientTable</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bench-csdeconv">bench_csdeconv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#num-grad">num_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#read-stanford-labels">read_stanford_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bench-local-maxima">bench_local_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#get-sphere">get_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#local-maxima">local_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id45">measure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#unique-edges">unique_edges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bench-quick-squash">bench_quick_squash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id46">measure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#ndindex">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#old-squash">old_squash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#quick-squash">quick_squash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#reduce">reduce</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bench-vec-val-vect">bench_vec_val_vect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id47">measure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#randn">randn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#vec-val-vect">vec_val_vect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#with-einsum">with_einsum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#cache"><code class="docutils literal"><span class="pre">Cache</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#auto-attr">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#range"><code class="docutils literal"><span class="pre">range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#coeff-of-determination">coeff_of_determination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#kfold-xval">kfold_xval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#axsymshresponse"><code class="docutils literal"><span class="pre">AxSymShResponse</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#constrainedsdtmodel"><code class="docutils literal"><span class="pre">ConstrainedSDTModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id54"><code class="docutils literal"><span class="pre">ConstrainedSphericalDeconvModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sphharmfit"><code class="docutils literal"><span class="pre">SphHarmFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sphharmmodel"><code class="docutils literal"><span class="pre">SphHarmModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#tensormodel"><code class="docutils literal"><span class="pre">TensorModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id76"><code class="docutils literal"><span class="pre">range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#auto-response">auto_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#cart2sphere">cart2sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#csdeconv">csdeconv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#estimate-response">estimate_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#fa-trace-to-lambdas">fa_trace_to_lambdas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#forward-sdeconv-mat">forward_sdeconv_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#forward-sdt-deconv-mat">forward_sdt_deconv_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#fractional-anisotropy">fractional_anisotropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id84">get_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#lazy-index">lazy_index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#lpn">lpn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#multi-voxel-fit">multi_voxel_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id85">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#odf-deconv">odf_deconv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#odf-sh-to-sharp">odf_sh_to_sharp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#peaks-from-model">peaks_from_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#quad">quad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#real-sph-harm">real_sph_harm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#real-sym-sh-basis">real_sym_sh_basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#recursive-response">recursive_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#response-from-mask">response_from_mask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sh-to-rh">sh_to_rh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#single-tensor">single_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sph-harm-ind-list">sph_harm_ind_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#vec2vec-rotmat">vec2vec_rotmat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diffusionkurtosisfit"><code class="docutils literal"><span class="pre">DiffusionKurtosisFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diffusionkurtosismodel"><code class="docutils literal"><span class="pre">DiffusionKurtosisModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id118"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#tensorfit"><code class="docutils literal"><span class="pre">TensorFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id124"><code class="docutils literal"><span class="pre">range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#wcons">Wcons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#wrotate">Wrotate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#wrotate-element">Wrotate_element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#apparent-kurtosis-coef">apparent_kurtosis_coef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id125">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#axial-diffusivity">axial_diffusivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#axial-kurtosis">axial_kurtosis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#carlson-rd">carlson_rd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#carlson-rf">carlson_rf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#decompose-tensor">decompose_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#design-matrix">design_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#dki-prediction">dki_prediction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#from-lower-triangular">from_lower_triangular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#lower-triangular">lower_triangular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mean-diffusivity">mean_diffusivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mean-kurtosis">mean_kurtosis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id129">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#ols-fit-dki">ols_fit_dki</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#radial-diffusivity">radial_diffusivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#radial-kurtosis">radial_kurtosis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#split-dki-param">split_dki_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#wls-fit-dki">wls_fit_dki</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id134"><code class="docutils literal"><span class="pre">Cache</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diffusionspectrumdeconvfit"><code class="docutils literal"><span class="pre">DiffusionSpectrumDeconvFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diffusionspectrumdeconvmodel"><code class="docutils literal"><span class="pre">DiffusionSpectrumDeconvModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diffusionspectrumfit"><code class="docutils literal"><span class="pre">DiffusionSpectrumFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diffusionspectrummodel"><code class="docutils literal"><span class="pre">DiffusionSpectrumModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#odffit"><code class="docutils literal"><span class="pre">OdfFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#odfmodel"><code class="docutils literal"><span class="pre">OdfModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#lr-deconv">LR_deconv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#create-qspace">create_qspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#create-qtable">create_qtable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#fftn">fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#fftshift">fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#gen-psf">gen_PSF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#half-to-full-qspace">half_to_full_qspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#hanning-filter">hanning_filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#ifftshift">ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#map-coordinates">map_coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id153">multi_voxel_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#pdf-interp-coords">pdf_interp_coords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#pdf-odf">pdf_odf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#project-hemisph-bvecs">project_hemisph_bvecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#threshold-propagator">threshold_propagator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id154"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sphere"><code class="docutils literal"><span class="pre">Sphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id155"><code class="docutils literal"><span class="pre">TensorFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id163"><code class="docutils literal"><span class="pre">TensorModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id174"><code class="docutils literal"><span class="pre">range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#apparent-diffusion-coef">apparent_diffusion_coef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id175">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id176">axial_diffusivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#color-fa">color_fa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id177">decompose_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id178">design_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#determinant">determinant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#deviatoric">deviatoric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#eig-from-lo-tri">eig_from_lo_tri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#eigh">eigh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id181">fractional_anisotropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id182">from_lower_triangular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#geodesic-anisotropy">geodesic_anisotropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id195">get_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#gradient-table">gradient_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#isotropic">isotropic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#iter-fit-tensor">iter_fit_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#linearity">linearity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id199">lower_triangular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id200">mean_diffusivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mode">mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#nlls-fit-tensor">nlls_fit_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#norm">norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#ols-fit-tensor">ols_fit_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#pinv">pinv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#planarity">planarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#quantize-evecs">quantize_evecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id208">radial_diffusivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#restore-fit-tensor">restore_fit_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sphericity">sphericity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#tensor-prediction">tensor_prediction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#trace">trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id212">vec_val_vect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#vector-norm">vector_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#wls-fit-tensor">wls_fit_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id215"><code class="docutils literal"><span class="pre">Cache</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#generalizedqsamplingfit"><code class="docutils literal"><span class="pre">GeneralizedQSamplingFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#generalizedqsamplingmodel"><code class="docutils literal"><span class="pre">GeneralizedQSamplingModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id223"><code class="docutils literal"><span class="pre">OdfFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id224"><code class="docutils literal"><span class="pre">OdfModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#equatorial-maximum">equatorial_maximum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#equatorial-zone-vertices">equatorial_zone_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#gfa">gfa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id225">local_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id226">multi_voxel_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#normalize-qa">normalize_qa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#npa">npa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#odf-sum">odf_sum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#patch-maximum">patch_maximum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#patch-sum">patch_sum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#patch-vertices">patch_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#polar-zone-vertices">polar_zone_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#remove-similar-vertices">remove_similar_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#squared-radial-component">squared_radial_component</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#triple-odf-maxima">triple_odf_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#upper-hemi-map">upper_hemi_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#interpolator"><code class="docutils literal"><span class="pre">Interpolator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#nearestneighborinterpolator"><code class="docutils literal"><span class="pre">NearestNeighborInterpolator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#outsideimage"><code class="docutils literal"><span class="pre">OutsideImage</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#trilinearinterpolator"><code class="docutils literal"><span class="pre">TriLinearInterpolator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#array">array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#trilinear-interp">trilinear_interp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmrifit"><code class="docutils literal"><span class="pre">MapmriFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmrimodel"><code class="docutils literal"><span class="pre">MapmriModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id253"><code class="docutils literal"><span class="pre">ReconstFit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id254"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#b-mat">b_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#create-rspace">create_rspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#factorial">factorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#factorial2">factorial2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id257">gradient_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#hermite">hermite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-eap">mapmri_EAP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-index-matrix">mapmri_index_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-odf-matrix">mapmri_odf_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-phi-1d">mapmri_phi_1d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-phi-3d">mapmri_phi_3d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-phi-matrix">mapmri_phi_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-psi-1d">mapmri_psi_1d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-psi-3d">mapmri_psi_3d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#mapmri-psi-matrix">mapmri_psi_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id274">multi_voxel_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#optional-package">optional_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#warn">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#callablearray"><code class="docutils literal"><span class="pre">CallableArray</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#multivoxelfit"><code class="docutils literal"><span class="pre">MultiVoxelFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id275"><code class="docutils literal"><span class="pre">ReconstFit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#as-strided">as_strided</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id276">multi_voxel_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id277">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id278"><code class="docutils literal"><span class="pre">OdfFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id279"><code class="docutils literal"><span class="pre">OdfModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id280"><code class="docutils literal"><span class="pre">ReconstFit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id281"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id282">gfa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#minmax-normalize">minmax_normalize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#hemisphere"><code class="docutils literal"><span class="pre">HemiSphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#intemporarydirectory"><code class="docutils literal"><span class="pre">InTemporaryDirectory</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#peaksandmetrics"><code class="docutils literal"><span class="pre">PeaksAndMetrics</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#peaksandmetricsdirectiongetter"><code class="docutils literal"><span class="pre">PeaksAndMetricsDirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id283"><code class="docutils literal"><span class="pre">Sphere</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#repeat"><code class="docutils literal"><span class="pre">repeat</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#xrange"><code class="docutils literal"><span class="pre">xrange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#pool">Pool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#cpu-count">cpu_count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id284">gfa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id285">local_maxima</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id286">ndindex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#peak-directions">peak_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#peak-directions-nl">peak_directions_nl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id287">peaks_from_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id288">remove_similar_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#reshape-peaks-for-visualization">reshape_peaks_for_visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#search-descending">search_descending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sh-to-sf-matrix">sh_to_sf_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id289">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id290"><code class="docutils literal"><span class="pre">Cache</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#exponentialisotropicfit"><code class="docutils literal"><span class="pre">ExponentialIsotropicFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#exponentialisotropicmodel"><code class="docutils literal"><span class="pre">ExponentialIsotropicModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#isotropicfit"><code class="docutils literal"><span class="pre">IsotropicFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#isotropicmodel"><code class="docutils literal"><span class="pre">IsotropicModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id291"><code class="docutils literal"><span class="pre">ReconstFit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id292"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sparsefasciclefit"><code class="docutils literal"><span class="pre">SparseFascicleFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sparsefasciclemodel"><code class="docutils literal"><span class="pre">SparseFascicleModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id296">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#nanmean">nanmean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id297">optional_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sfm-design-matrix">sfm_design_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id302"><code class="docutils literal"><span class="pre">Cache</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#csaodfmodel"><code class="docutils literal"><span class="pre">CsaOdfModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#looseversion"><code class="docutils literal"><span class="pre">LooseVersion</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id304"><code class="docutils literal"><span class="pre">OdfFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id305"><code class="docutils literal"><span class="pre">OdfModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#opdtmodel"><code class="docutils literal"><span class="pre">OpdtModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#qballbasemodel"><code class="docutils literal"><span class="pre">QballBaseModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#qballmodel"><code class="docutils literal"><span class="pre">QballModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#residualbootstrapwrapper"><code class="docutils literal"><span class="pre">ResidualBootstrapWrapper</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id309"><code class="docutils literal"><span class="pre">SphHarmFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id310"><code class="docutils literal"><span class="pre">SphHarmModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#anisotropic-power">anisotropic_power</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id313">auto_attr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bootstrap-data-array">bootstrap_data_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#bootstrap-data-voxel">bootstrap_data_voxel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#calculate-max-order">calculate_max_order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id317">cart2sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#concatenate">concatenate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diag">diag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#diff">diff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#dot">dot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#empty">empty</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#eye">eye</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id318">forward_sdeconv_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#gen-dirac">gen_dirac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#hat">hat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id319">lazy_index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#lcr-matrix">lcr_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id320">lpn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#normalize-data">normalize_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#order-from-ncoef">order_from_ncoef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id321">pinv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#randint">randint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id324">real_sph_harm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id325">real_sym_sh_basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#real-sym-sh-mrtrix">real_sym_sh_mrtrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sf-to-sh">sf_to_sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id328">sh_to_rh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#sh-to-sf">sh_to_sf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id330">sh_to_sf_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#smooth-pinv">smooth_pinv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id331">sph_harm_ind_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#spherical-harmonics">spherical_harmonics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#svd">svd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#unique">unique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id332"><code class="docutils literal"><span class="pre">Cache</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shorefit"><code class="docutils literal"><span class="pre">ShoreFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shoremodel"><code class="docutils literal"><span class="pre">ShoreModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id354">cart2sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id355">create_rspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id356">factorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#genlaguerre">genlaguerre</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#l-shore">l_shore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id357">multi_voxel_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#n-shore">n_shore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id358">optional_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id359">real_sph_harm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shore-indices">shore_indices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shore-matrix">shore_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shore-matrix-odf">shore_matrix_odf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shore-matrix-pdf">shore_matrix_pdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#shore-order">shore_order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.reconst.html#id366">warn</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.segment.html"><code class="docutils literal"><span class="pre">segment</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.benchmarks">Module: <code class="docutils literal"><span class="pre">segment.benchmarks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.benchmarks.bench_quickbundles">Module: <code class="docutils literal"><span class="pre">segment.benchmarks.bench_quickbundles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.clustering">Module: <code class="docutils literal"><span class="pre">segment.clustering</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.mask">Module: <code class="docutils literal"><span class="pre">segment.mask</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.metric">Module: <code class="docutils literal"><span class="pre">segment.metric</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.quickbundles">Module: <code class="docutils literal"><span class="pre">segment.quickbundles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.segment.html#module-dipy.segment.threshold">Module: <code class="docutils literal"><span class="pre">segment.threshold</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#mdfpy"><code class="docutils literal"><span class="pre">MDFpy</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#metric"><code class="docutils literal"><span class="pre">Metric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#qb-new"><code class="docutils literal"><span class="pre">QB_New</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#qb-old"><code class="docutils literal"><span class="pre">QB_Old</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#assert-array-equal">assert_array_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#assert-arrays-equal">assert_arrays_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#assert-equal">assert_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#bench-quickbundles">bench_quickbundles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#get-data">get_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#measure">measure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#abcmeta"><code class="docutils literal"><span class="pre">ABCMeta</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#averagepointwiseeuclideanmetric"><code class="docutils literal"><span class="pre">AveragePointwiseEuclideanMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#cluster"><code class="docutils literal"><span class="pre">Cluster</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#clustercentroid"><code class="docutils literal"><span class="pre">ClusterCentroid</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#clustermap"><code class="docutils literal"><span class="pre">ClusterMap</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#clustermapcentroid"><code class="docutils literal"><span class="pre">ClusterMapCentroid</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#clustering"><code class="docutils literal"><span class="pre">Clustering</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#identity"><code class="docutils literal"><span class="pre">Identity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id3"><code class="docutils literal"><span class="pre">Metric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#quickbundles"><code class="docutils literal"><span class="pre">QuickBundles</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#resamplefeature"><code class="docutils literal"><span class="pre">ResampleFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#abstractmethod">abstractmethod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#applymask">applymask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#binary-dilation">binary_dilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#bounding-box">bounding_box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#clean-cc-mask">clean_cc_mask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#color-fa">color_fa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#crop">crop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#fractional-anisotropy">fractional_anisotropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#generate-binary-structure">generate_binary_structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#median-filter">median_filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#median-otsu">median_otsu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#multi-median">multi_median</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#otsu">otsu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#segment-from-cfa">segment_from_cfa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#warn">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#arclengthfeature"><code class="docutils literal"><span class="pre">ArcLengthFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id13"><code class="docutils literal"><span class="pre">AveragePointwiseEuclideanMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#centerofmassfeature"><code class="docutils literal"><span class="pre">CenterOfMassFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#cosinemetric"><code class="docutils literal"><span class="pre">CosineMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#euclideanmetric"><code class="docutils literal"><span class="pre">EuclideanMetric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#feature"><code class="docutils literal"><span class="pre">Feature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#identityfeature"><code class="docutils literal"><span class="pre">IdentityFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id14"><code class="docutils literal"><span class="pre">Metric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#midpointfeature"><code class="docutils literal"><span class="pre">MidpointFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#minimumaveragedirectflipmetric"><code class="docutils literal"><span class="pre">MinimumAverageDirectFlipMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id17"><code class="docutils literal"><span class="pre">ResampleFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#sumpointwiseeuclideanmetric"><code class="docutils literal"><span class="pre">SumPointwiseEuclideanMetric</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#vectorofendpointsfeature"><code class="docutils literal"><span class="pre">VectorOfEndpointsFeature</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#dist">dist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#distance-matrix">distance_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#mdf">mdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id21"><code class="docutils literal"><span class="pre">QuickBundles</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#bundles-distances-mdf">bundles_distances_mdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#downsample">downsample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#local-skeleton-clustering">local_skeleton_clustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id22">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.segment.html#id23">otsu</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.sims.html"><code class="docutils literal"><span class="pre">sims</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.sims.html#module-dipy.sims.phantom">Module: <code class="docutils literal"><span class="pre">sims.phantom</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.sims.html#module-dipy.sims.voxel">Module: <code class="docutils literal"><span class="pre">sims.voxel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#singletensor">SingleTensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#add-noise">add_noise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#diff2eigenvectors">diff2eigenvectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#get-data">get_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#gradient-table">gradient_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#orbital-phantom">orbital_phantom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#vec2vec-rotmat">vec2vec_rotmat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#dki-signal">DKI_signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multitensor">MultiTensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#id8">SingleTensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#sticksandball">SticksAndBall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#id12">add_noise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#all-tensor-evecs">all_tensor_evecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#dki-design-matrix">dki_design_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#dot">dot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#kurtosis-element">kurtosis_element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multi-tensor">multi_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multi-tensor-dki">multi_tensor_dki</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multi-tensor-msd">multi_tensor_msd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multi-tensor-odf">multi_tensor_odf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multi-tensor-pdf">multi_tensor_pdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#multi-tensor-rtop">multi_tensor_rtop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#single-tensor">single_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#single-tensor-msd">single_tensor_msd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#single-tensor-odf">single_tensor_odf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#single-tensor-pdf">single_tensor_pdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#single-tensor-rtop">single_tensor_rtop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#sphere2cart">sphere2cart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#sticks-and-ball">sticks_and_ball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.sims.html#id30">vec2vec_rotmat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dipy.tracking.html"><code class="docutils literal"><span class="pre">tracking</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking._utils">Module: <code class="docutils literal"><span class="pre">tracking._utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.benchmarks">Module: <code class="docutils literal"><span class="pre">tracking.benchmarks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.benchmarks.bench_streamline">Module: <code class="docutils literal"><span class="pre">tracking.benchmarks.bench_streamline</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.eudx">Module: <code class="docutils literal"><span class="pre">tracking.eudx</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.learning">Module: <code class="docutils literal"><span class="pre">tracking.learning</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.life">Module: <code class="docutils literal"><span class="pre">tracking.life</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.local">Module: <code class="docutils literal"><span class="pre">tracking.local</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.local.localtracking">Module: <code class="docutils literal"><span class="pre">tracking.local.localtracking</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.markov">Module: <code class="docutils literal"><span class="pre">tracking.markov</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.metrics">Module: <code class="docutils literal"><span class="pre">tracking.metrics</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dipy.tracking.html#module-dipy.tracking.streamline">Module: <code class="docutils literal"><span class="pre">tracking.streamline</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#bench">bench</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#test">test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#warn">warn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#bench-compress-streamlines">bench_compress_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#bench-length">bench_length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#bench-set-number-of-points">bench_set_number_of_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#compress-streamlines">compress_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#compress-streamlines-python">compress_streamlines_python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#get-data">get_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#length">length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#length-python">length_python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#measure">measure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#set-number-of-points">set_number_of_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#set-number-of-points-python">set_number_of_points_python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#eudx"><code class="docutils literal"><span class="pre">EuDX</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#eudx-both-directions">eudx_both_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#get-sphere">get_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#detect-corresponding-tracks">detect_corresponding_tracks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#detect-corresponding-tracks-plus">detect_corresponding_tracks_plus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#fiberfit"><code class="docutils literal"><span class="pre">FiberFit</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#fibermodel"><code class="docutils literal"><span class="pre">FiberModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#lifesignalmaker"><code class="docutils literal"><span class="pre">LifeSignalMaker</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#reconstfit"><code class="docutils literal"><span class="pre">ReconstFit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#reconstmodel"><code class="docutils literal"><span class="pre">ReconstModel</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#range"><code class="docutils literal"><span class="pre">range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#grad-tensor">grad_tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#gradient">gradient</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#streamline-gradients">streamline_gradients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#streamline-signal">streamline_signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#streamline-tensors">streamline_tensors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#transform-streamlines">transform_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#unique-rows">unique_rows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#voxel2streamline">voxel2streamline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#acttissueclassifier"><code class="docutils literal"><span class="pre">ActTissueClassifier</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#binarytissueclassifier"><code class="docutils literal"><span class="pre">BinaryTissueClassifier</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#directiongetter"><code class="docutils literal"><span class="pre">DirectionGetter</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#localtracking"><code class="docutils literal"><span class="pre">LocalTracking</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#thresholdtissueclassifier"><code class="docutils literal"><span class="pre">ThresholdTissueClassifier</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#tissueclassifier"><code class="docutils literal"><span class="pre">TissueClassifier</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#bunch"><code class="docutils literal"><span class="pre">Bunch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id27"><code class="docutils literal"><span class="pre">LocalTracking</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#local-tracker">local_tracker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#boundarystepper"><code class="docutils literal"><span class="pre">BoundaryStepper</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#cdt-nno"><code class="docutils literal"><span class="pre">CDT_NNO</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#closestdirectiontracker"><code class="docutils literal"><span class="pre">ClosestDirectionTracker</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#directionfinder"><code class="docutils literal"><span class="pre">DirectionFinder</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#fixedsizestepper"><code class="docutils literal"><span class="pre">FixedSizeStepper</span></code></a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#markovintegrator"><code class="docutils literal"><span class="pre">MarkovIntegrator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#nearestneighborinterpolator"><code class="docutils literal"><span class="pre">NearestNeighborInterpolator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#outsideimage"><code class="docutils literal"><span class="pre">OutsideImage</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#probabilisticodfweightedtracker"><code class="docutils literal"><span class="pre">ProbabilisticOdfWeightedTracker</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#xrange"><code class="docutils literal"><span class="pre">xrange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#markov-streamline">markov_streamline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#peak-directions">peak_directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id32"><code class="docutils literal"><span class="pre">xrange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#arbitrarypoint">arbitrarypoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#bytes">bytes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#center-of-mass">center_of_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#downsample">downsample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#endpoint">endpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#frenet-serret">frenet_serret</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#generate-combinations">generate_combinations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#inside-sphere">inside_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#inside-sphere-points">inside_sphere_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#intersect-sphere">intersect_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id33">length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#longest-track-bundle">longest_track_bundle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#magn">magn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#mean-curvature">mean_curvature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#mean-orientation">mean_orientation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#midpoint">midpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#midpoint2point">midpoint2point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#principal-components">principal_components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#splev">splev</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#spline">spline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#splprep">splprep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#startpoint">startpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#winding">winding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#apply-affine">apply_affine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#cdist">cdist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#center-streamlines">center_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id40">compress_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#deepcopy">deepcopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#dist-to-corner">dist_to_corner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id55">length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#orient-by-rois">orient_by_rois</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#relist-streamlines">relist_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#select-by-rois">select_by_rois</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#select-random-set-of-streamlines">select_random_set_of_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id56">set_number_of_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#streamline-near-roi">streamline_near_roi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id57">transform_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#unlist-streamlines">unlist_streamlines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dipy.tracking.html#id58">warn</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dipy.html" title="dipy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../theory/spherical.html" title="Spherical coordinates"
+             >previous</a> |</li>
+  <li><a href="../index.html">Home</a> |&nbsp;</li>
+  <li><a href="../stateoftheart.html">Overview</a> |&nbsp;</li>
+  <li><a href="../examples_index.html">Gallery</a> |&nbsp;</li>
+  <li><a href="../installation.html">Download</a> |&nbsp;</li>
+  <li><a href="../subscribe.html">Subscribe</a> |&nbsp;</li>
+  <li><a href="../developers.html">Developers</a> |&nbsp;</li>
+  <li><a href="../cite.html">Cite</a> &nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../documentation.html" >Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2015, dipy developers &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
